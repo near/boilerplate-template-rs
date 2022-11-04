@@ -11,10 +11,21 @@
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "cd contract && cargo test",
     "test:integration": "cd integration-tests && cargo run --example integration-tests \"../contract/target/wasm32-unknown-unknown/release/hello_near.wasm\"",
-    "postinstall": "cd frontend && npm install && cd .. && echo rs tests && echo rs contract"
+    "postinstall": "cd frontend && npm install && cd .. && echo rs tests && echo rs contract",
+    "lint": "eslint .",
+    "prettier:check": "cd frontend && npm run prettier:check",
+    "prepare": "husky install"
   },
   "devDependencies": {
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "near-cli": "^3.3.0"
   },
-  "dependencies": {}
+  "lint-staged": {
+    "*/frontend/*": "prettier --write --ignore-unknown"
+  }
 }
