@@ -5,7 +5,6 @@ import './assets/global.css';
 
 import { EducationalText, SignInPrompt, SignOutButton } from './ui-components';
 
-
 export default function App({ isSignedIn, helloNEAR, wallet }) {
   const [valueFromBlockchain, setValueFromBlockchain] = React.useState();
 
@@ -13,7 +12,8 @@ export default function App({ isSignedIn, helloNEAR, wallet }) {
 
   // Get blockchian state once on component load
   React.useEffect(() => {
-    helloNEAR.getGreeting()
+    helloNEAR
+      .getGreeting()
       .then(setValueFromBlockchain)
       .catch(alert)
       .finally(() => {
@@ -24,15 +24,18 @@ export default function App({ isSignedIn, helloNEAR, wallet }) {
   /// If user not signed-in with wallet - show prompt
   if (!isSignedIn) {
     // Sign-in flow will reload the page later
-    return <SignInPrompt greeting={valueFromBlockchain} onClick={() => wallet.signIn()}/>;
+    return <SignInPrompt greeting={valueFromBlockchain} onClick={() => wallet.signIn()} />;
   }
 
   function changeGreeting(e) {
     e.preventDefault();
     setUiPleaseWait(true);
     const { greetingInput } = e.target.elements;
-    helloNEAR.setGreeting(greetingInput.value)
-      .then(async () => {return helloNEAR.getGreeting();})
+    helloNEAR
+      .setGreeting(greetingInput.value)
+      .then(async () => {
+        return helloNEAR.getGreeting();
+      })
       .then(setValueFromBlockchain)
       .finally(() => {
         setUiPleaseWait(false);
@@ -41,7 +44,7 @@ export default function App({ isSignedIn, helloNEAR, wallet }) {
 
   return (
     <>
-      <SignOutButton accountId={wallet.accountId} onClick={() => wallet.signOut()}/>
+      <SignOutButton accountId={wallet.accountId} onClick={() => wallet.signOut()} />
       <main className={uiPleaseWait ? 'please-wait' : ''}>
         <h1>
           The contract says: <span className="greeting">{valueFromBlockchain}</span>
@@ -49,18 +52,14 @@ export default function App({ isSignedIn, helloNEAR, wallet }) {
         <form onSubmit={changeGreeting} className="change">
           <label>Change greeting:</label>
           <div>
-            <input
-              autoComplete="off"
-              defaultValue={valueFromBlockchain}
-              id="greetingInput"
-            />
+            <input autoComplete="off" defaultValue={valueFromBlockchain} id="greetingInput" />
             <button>
               <span>Save</span>
               <div className="loader"></div>
             </button>
           </div>
         </form>
-        <EducationalText/>
+        <EducationalText />
       </main>
     </>
   );
