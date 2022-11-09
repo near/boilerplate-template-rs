@@ -1,7 +1,10 @@
 <h1 align="center">
   <a href="https://github.com/near/boilerplate-template-rs">
-    <!-- Please provide path to your logo here -->
-    <img src="docs/images/pagoda_logo_dark.png" alt="Logo" width="100" height="100">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/near/boilerplate-template-rs/main/docs/images/pagoda_logo_light.png">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/near/boilerplate-template-rs/main/docs/images/pagoda_logo_dark.png">
+      <img alt="" src="https://raw.githubusercontent.com/near/boilerplate-template-rs/main/docs/images/pagoda_logo_dark.png">
+    </picture>
   </a>
 </h1>
 
