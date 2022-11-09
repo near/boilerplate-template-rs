@@ -10,12 +10,12 @@ To set up a development environment, please follow these steps:
 1. Clone the repo
 
    ```sh
-   git clone https://github.com/shelegdmitriy/test-boilerplate-template-rs
+   git clone https://github.com/near/boilerplate-template-rs
    ```
 
 2. Navigate to your project:
    ```sh
-   cd test-boilerplate-template
+   cd boilerplate-template-rs
    ```
 3. Build your contract:
    ```sh
@@ -36,7 +36,7 @@ To set up a development environment, please follow these steps:
 
 ## Issues and feature requests
 
-You've found a bug in the source code, a mistake in the documentation or maybe you'd like a new feature? You can help us by [submitting an issue on GitHub](https://github.com/shelegdmitriy/test-boilerplate-template-rs/issues). Before you create an issue, make sure to search the issue archive -- your issue may have already been addressed!
+You've found a bug in the source code, a mistake in the documentation or maybe you'd like a new feature? You can help us by [submitting an issue on GitHub](https://github.com/near/boilerplate-template-rs/issues). Before you create an issue, make sure to search the issue archive -- your issue may have already been addressed!
 
 Please try to create bug reports that are:
 
@@ -50,10 +50,10 @@ Please try to create bug reports that are:
 ### How to submit a Pull Request
 
 1. Search our repository for open or closed
-   [Pull Requests](https://github.com/shelegdmitriy/test-boilerplate-template-rs/pulls)
+   [Pull Requests](https://github.com/near/boilerplate-template-rs/pulls)
    that relate to your submission. You don't want to duplicate effort.
 2. Fork the project
 3. Create your feature branch (`git checkout -b feat/amazing_feature`)
 4. Commit your changes (`git commit -m 'feat: add amazing_feature'`) PROJECT_NAME uses [conventional commits](https://www.conventionalcommits.org), so please follow the specification in your commit messages.
 5. Push to the branch (`git push origin feat/amazing_feature`)
-6. [Open a Pull Request](https://github.com/shelegdmitriy/test-boilerplate-template-rs/compare?expand=1)
+6. [Open a Pull Request](https://github.com/near/boilerplate-template-rs/compare?expand=1)
