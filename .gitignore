@@ -7,10 +7,12 @@ node_modules
 
 # build
 /out
-/dist
+frontend/dist
+.parcel-cache
 
-# keys
-/templates/react/neardev
+contract/build
+contract/neardev
+contract/target
 
 # testing
 /coverage
