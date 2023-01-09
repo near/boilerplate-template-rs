@@ -49,7 +49,7 @@
 
 ## About
 
-This project is created for easy-to-start as a React + Rust skeleton template in the Pagoda Gallery. It was initialized with [create-near-app]. Clone it and start to build your own gallery project!
+This project is created for easy-to-start as a React + Rust skeleton template in the Pagoda Gallery. It was initialized with [create-near-app]. Use this template and start to build your own project!
 
 ### Built With
 
