@@ -4,28 +4,26 @@
   "license": "(MIT AND Apache-2.0)",
   "scripts": {
     "start": "cd frontend && npm run start",
+    "dev": "cd frontend && npm run dev",
     "deploy": "cd contract && ./deploy.sh",
-    "build": "npm run build:contract && npm run build:web",
-    "build:web": "cd frontend && npm run build",
+    "build": "npm run build:contract && npm run build:frontend",
+    "build:frontend": "cd frontend && npm run build",
     "build:contract": "cd contract && ./build.sh",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "cd contract && cargo test",
     "test:integration": "cd integration-tests && cargo run --example integration-tests \"../contract/target/wasm32-unknown-unknown/release/hello_near.wasm\"",
     "postinstall": "cd frontend && npm install && cd .. && echo rs tests && echo rs contract",
-    "lint": "eslint .",
+    "lint": "cd frontend && npm run lint",
     "prettier:check": "cd frontend && npm run prettier:check",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-react-app": "^7.0.1",
-    "eslint-plugin-react": "^7.31.10",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "autoprefixer": "^10.4.13",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "near-cli": "^3.3.0"
   },
   "lint-staged": {
-    "*/frontend/*": "prettier --write --ignore-unknown"
+    "*/.{js,jsx,ts,tsx,css}": "prettier --write ."
   }
 }

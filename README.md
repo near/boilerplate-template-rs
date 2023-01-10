@@ -36,6 +36,7 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
+- [Deploy on Vercel](#deploy-on-vercel)
 - [Roadmap](#roadmap)
 - [Support](#support)
 - [Project assistance](#project-assistance)
@@ -49,18 +50,18 @@
 
 ## About
 
-This project is created for easy-to-start as a React + Rust skeleton template in the Pagoda Gallery. It was initialized with [create-near-app]. Use this template and start to build your own project!
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and [`tailwindcss`](https://tailwindcss.com/docs/guides/nextjs) created for easy-to-start as a React + Rust skeleton template in the Pagoda Gallery. Smart-contract was initialized with [create-near-app]. Use this template and start to build your own gallery project!
 
 ### Built With
 
-[create-near-app], [amazing-github-template](https://github.com/dec0dOS/amazing-github-template)
+[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app), [`tailwindcss`](https://tailwindcss.com/docs/guides/nextjs), [`tailwindui`](https://tailwindui.com/), [`@headlessui/react`](https://headlessui.com/), [`@heroicons/react`](https://heroicons.com/), [create-near-app], [`amazing-github-template`](https://github.com/dec0dOS/amazing-github-template)
 
 Getting Started
 ==================
 
 ### Prerequisites
 
-Make sure you have a [current version of Node.js](https://nodejs.org/en/about/releases/) installed – we are targeting versions `16+`.
+Make sure you have a [current version of Node.js](https://nodejs.org/en/about/releases/) installed – we are targeting versions `18>`.
 
 Read about other [prerequisites](https://docs.near.org/develop/prerequisites) in our docs.
 
@@ -84,23 +85,29 @@ Deploy your contract to TestNet with a temporary dev account:
 Usage
 =====
 
-Test your contract:
-
-    npm test
-
 Start your frontend:
 
-    npm start
+    npm run start
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
+Test your contract:
+
+    npm run test
 
 Exploring The Code
 ==================
 
 1. The smart-contract code lives in the `/contract` folder. See the README there for
    more info. In blockchain apps the smart contract is the "backend" of your app.
-2. The frontend code lives in the `/frontend` folder. `/frontend/index.html` is a great
-   place to start exploring. Note that it loads in `/frontend/index.js`,
-   this is your entrypoint to learn how the frontend connects to the NEAR blockchain.
+2. The frontend code lives in the `/frontend` folder. You can start editing the page by
+   modifying `frontend/pages/index.tsx`. The page auto-updates as you edit the file.
+   This is your entrypoint to learn how the frontend connects to the NEAR blockchain.
 3. Test your contract: `npm test`, this will run the tests in `integration-tests` directory.
+4. [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `frontend/pages/api/hello.ts`.
+5. The `frontend/pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+6. This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 
 Deploy
@@ -153,20 +160,29 @@ Modify the line in `frontend/index.js` that sets the account name of the contrac
     const CONTRACT_NAME = process.env.CONTRACT_NAME || 'near-blank-project.YOUR-NAME.testnet'
 
 
-
 Troubleshooting
 ===============
 
 On Windows, if you're seeing an error containing `EPERM` it may be related to spaces in your path. Please see [this issue](https://github.com/zkat/npx/issues/209) for more details.
 
 
+  [create-next-app]: https://github.com/vercel/next.js/tree/canary/packages/create-next-app
+  [Node.js]: https://nodejs.org/en/download/package-manager
+  [tailwindcss]: https://tailwindcss.com/docs/guides/nextjs
   [create-near-app]: https://github.com/near/create-near-app
-  [Node.js]: https://nodejs.org/en/download/package-manager/
   [jest]: https://jestjs.io/
   [NEAR accounts]: https://docs.near.org/concepts/basics/account
   [NEAR Wallet]: https://wallet.testnet.near.org/
   [near-cli]: https://github.com/near/near-cli
-  [gh-pages]: https://github.com/tschaub/gh-pages
+
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 ## Roadmap
 
