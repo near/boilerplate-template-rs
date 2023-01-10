@@ -2,9 +2,9 @@
 
 ## Reporting a Vulnerability
 
-If there are any vulnerabilities in **test-boilerplate-template**, don't hesitate to _report them_.
+If there are any vulnerabilities in **Rust Boilerplate Template**, don't hesitate to _report them_.
 
-1. Use any of the [private contact addresses](https://github.com/shelegdmitriy/test-boilerplate-template#support).
+1. Use any of the [private contact addresses](https://github.com/near/boilerplate-template-rs#support).
 2. Describe the vulnerability.
 
    If you have a fix, that is most welcome -- please attach or summarize it in your message!
