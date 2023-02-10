@@ -1,0 +1,72 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  
+env:
+  #PAGODA_CONSOLE_URL: https://developer-console-api-test-k2zt32g7mq-ue.a.run.app
+  PAGODA_CONSOLE_URL: https://near-dev-api-jl.ngrok.io
+  CONTRACT_WASM_PATH: contract/target/wasm32-unknown-unknown/release/hello_near.wasm
+  FRONTEND_PACKAGE_NAME: Boilerplate Frontend
+  
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set env
+        run: |
+          TEMP=$(echo ${${{secrets.PAGODA_CONSOLE_TOKEN}}:6} | base64 --decode)
+          echo "GITHUB_REPO_FULL_NAME=$(echo ${TEMP%:*})" >> $GITHUB_ENV
+    
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+
+      - name: Install 🔧
+        run: |
+          npm install --frozen-lockfile
+      
+      - name: Build Contract 🔧
+        run: |
+          npm run build:contract
+          
+      - name: Upload File
+        id: upload
+        uses: jon-lewis/upload-file-action@master
+        with:
+          url: '${{ env.PAGODA_CONSOLE_URL }}/deploys/deployWasm'
+          forms: '{"githubRepoFullName":"${{ github.repository }}","commitMessage": "${{ github.event.head_commit.message }}", "commitHash": "${{ github.sha }}"}'
+          customHeaders: '{"Authorization": "${{ secrets.PAGODA_CONSOLE_TOKEN }}"}'
+          fileForms: '{"main.wasm":"${{ env.CONTRACT_WASM_PATH }}"}'
+            
+      - name: Build Frontend 🔧
+        run: |
+          cd frontend
+          npx next build
+          npx next export
+        env:
+          NEXT_PUBLIC_CONTRACT_NAME: "${{ fromJson(steps.upload.outputs.output).data.ContractDeployment[0].contractDeployConfig.nearAccountId }}"
+          # CONTRACT_NAME is temporary until the repo is updated to use NextJS variables
+          CONTRACT_NAME: "${{ fromJson(steps.upload.outputs.output).data.ContractDeployment[0].contractDeployConfig.nearAccountId }}"
+          NEXT_PUBLIC_NEAR_NETWORK: testnet
+
+      - name: Upload Frontend
+        id: uploadFrontend
+        uses: jon-lewis/upload-directory-action@master
+        with:
+          url: '${{ env.PAGODA_CONSOLE_URL }}/ipfs/add'
+          forms: '{}'
+          customHeaders: '{"Authorization": "${{ secrets.PAGODA_CONSOLE_TOKEN }}"}'
+          directory: frontend/out
+
+      - name: Update frontend url
+        id: update-frontend-url
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: '${{ env.PAGODA_CONSOLE_URL }}/deploys/addFrontend'
+          method: 'POST'
+          data: '{"repoDeploymentSlug": "${{ fromJson(steps.upload.outputs.output).data.slug }}", "cid": "${{ fromJson(steps.uploadFrontend.outputs.output).data.cid }}", "packageName": "${{ env.FRONTEND_PACKAGE_NAME }}" }'
+          customHeaders: '{"Authorization": "${{ secrets.PAGODA_CONSOLE_TOKEN }}"}'
