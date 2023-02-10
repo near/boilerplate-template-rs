@@ -48,9 +48,9 @@ jobs:
           npx next build
           npx next export
         env:
-          NEXT_PUBLIC_CONTRACT_NAME: "${{ fromJson(steps.upload.outputs.output).data.ContractDeployment[0].contractDeployConfig.nearAccountId }}"
+          NEXT_PUBLIC_CONTRACT_NAME: "${{ fromJson(steps.upload.outputs.output).data.contractDeployments[0].contractDeployConfig.nearAccountId }}"
           # CONTRACT_NAME is temporary until the repo is updated to use NextJS variables
-          CONTRACT_NAME: "${{ fromJson(steps.upload.outputs.output).data.ContractDeployment[0].contractDeployConfig.nearAccountId }}"
+          CONTRACT_NAME: "${{ fromJson(steps.upload.outputs.output).data.contractDeployments[0].contractDeployConfig.nearAccountId }}"
           NEXT_PUBLIC_NEAR_NETWORK: testnet
 
       - name: Upload Frontend
