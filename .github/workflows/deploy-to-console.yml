@@ -34,8 +34,9 @@ jobs:
           cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
+          path: |
+            **/node_modules
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install 🔧
         if: steps.cache-npm.outputs.cache-hit != 'true'
