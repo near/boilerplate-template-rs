@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   
 env:
-  PAGODA_CONSOLE_URL: https://developer-console-api-test-k2zt32g7mq-ue.a.run.app
+  PAGODA_CONSOLE_URL: https://developer-console-api-prod-k2zt32g7mq-ue.a.run.app
   CONTRACT_WASM_PATH: contract/target/wasm32-unknown-unknown/release/hello_near.wasm
   PREBUILT_CONTRACT_WASM_PATH: prebuilt-assets/hello_near.wasm
   FRONTEND_PACKAGE_NAME: Boilerplate Frontend
