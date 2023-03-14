@@ -8,6 +8,7 @@ on:
 env:
   PAGODA_CONSOLE_URL: https://developer-console-api-prod-k2zt32g7mq-ue.a.run.app
   CONTRACT_WASM_PATH: contract/target/wasm32-unknown-unknown/release/hello_near.wasm
+  PREBUILT_CONTRACT_WASM_PATH: prebuilt-assets/hello_near.wasm
   FRONTEND_PACKAGE_NAME: Boilerplate Frontend
   
 jobs:
@@ -19,17 +20,31 @@ jobs:
           TEMP_SECRET="${{secrets.PAGODA_CONSOLE_TOKEN}}"
           TEMP=$(echo ${TEMP_SECRET:6} | base64 --decode)
           echo "GITHUB_REPO_FULL_NAME=$(echo ${TEMP%:*})" >> $GITHUB_ENV
+          echo "NUMBER_OF_COMMITS=$(curl -I -k "https://api.github.com/repos/${{ github.repository }}/commits?per_page=1" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" | sed -n '/^[Ll]ink:/ s/.*"next".*page=\([0-9]*\).*"last".*/\1/p')" >> $GITHUB_ENV
     
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: "18.x"
 
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            **/node_modules
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install 🔧
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: |
           npm install --frozen-lockfile
       
-      - name: Build Contract 🔧
+      - if: env.NUMBER_OF_COMMITS > 1
+        name: Build Contract 🔧
         run: |
           npm run build:contract
           
@@ -40,7 +55,7 @@ jobs:
           url: '${{ env.PAGODA_CONSOLE_URL }}/deploys/deployWasm'
           forms: '{"githubRepoFullName":"${{ env.GITHUB_REPO_FULL_NAME }}","commitMessage": "${{ github.event.head_commit.message }}", "commitHash": "${{ github.sha }}"}'
           customHeaders: '{"Authorization": "${{ secrets.PAGODA_CONSOLE_TOKEN }}"}'
-          fileForms: '{"main.wasm":"${{ env.CONTRACT_WASM_PATH }}"}'
+          fileForms: '{"main.wasm":"${{ env.NUMBER_OF_COMMITS > 1 && env.CONTRACT_WASM_PATH || env.PREBUILT_CONTRACT_WASM_PATH }}"}'
             
       - name: Build Frontend 🔧
         run: |
